@@ -12,7 +12,7 @@
 
 {#if artwork}
 
-    <ArtworkDetail artwork={artwork} />
+    <ArtworkDetail artwork={data.artwork} />
 
 {:else}
 

@@ -5,21 +5,6 @@
 
     export let data: PageData
 
-    // const prints = [
-    //     {
-    //         id: '0',
-    //         title: 'Evening Silence',
-    //         price: 120,
-    //         image: ''
-    //     },
-    //     {
-    //         id: '1',
-    //         title: 'Blue Figure',
-    //         price: 95,
-    //         image: ''
-    //     }
-    // ];
-
 </script>
 
 <section class="max-w-6xl mx-auto px-6 py-16">

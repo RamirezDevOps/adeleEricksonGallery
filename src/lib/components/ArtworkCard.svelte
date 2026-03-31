@@ -8,11 +8,13 @@
         year: number;
         image: string;
         sold?: boolean;
-    };
+    }
+
+    export let mode: "public" | "admin" = "public"
 
 </script>
 
-<a href={`/portfolio/${artwork.id}`} class="block group">
+<a href={mode === "public" ? `/portfolio/${artwork.id}` : `/admin/artworks/${artwork.id}`} class="block group">
 
     <div class="aspect-[3/4] bg-gray-200 border overflow-hidden flex items-center justify-center">
         {#if artwork.image}

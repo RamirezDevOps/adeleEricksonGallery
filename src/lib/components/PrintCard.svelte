@@ -7,9 +7,11 @@
         image: string;
     };
 
+    export let mode: "public" | "admin" = "public"
+
 </script>
 
-<a href={`/prints/${print.id}`} class="block group">
+<a href={mode === "public" ? `/prints/${print.id}` : `prints/${print.id}`} class="block group">
 
     <div class="aspect-[3/4] bg-gray-200 border flex items-center justify-center">
 
