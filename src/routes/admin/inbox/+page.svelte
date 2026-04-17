@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import InboxItem from "$lib/components/InboxItem.svelte";
+    import InboxItem from "$lib/components/InboxItem.svelte"
 
     type Inquiry = {
         id: string

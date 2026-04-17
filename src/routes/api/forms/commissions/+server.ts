@@ -1,5 +1,5 @@
-import { db } from "$lib/firebase/admin.server";
-import { Timestamp } from "firebase-admin/firestore";
+import { db } from "$lib/firebase/admin.server"
+import { Timestamp } from "firebase-admin/firestore"
 
 function sanitize(input: unknown) {
     if (typeof input !== 'string') return ''

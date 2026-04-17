@@ -7,6 +7,11 @@
         type: 'commission' | 'purchase'
         status: 'unread' | 'read'
         createdAt: number
+
+        relatedType?: 'artwork' | 'print'
+        relatedId?: string
+        relatedTitle?: string
+        selectedSize?: string
     }
 </script>
 

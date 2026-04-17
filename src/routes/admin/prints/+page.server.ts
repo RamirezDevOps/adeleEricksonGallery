@@ -5,7 +5,7 @@ type Print = {
     id: string,
     title: string,
     price: number,
-    image: string,
+    imagePublicId: string,
 }
 
 export const load: PageServerLoad = async () => {

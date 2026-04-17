@@ -1,39 +1,41 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import { auth } from '$lib/firebase/client';
-    import { signInWithEmailAndPassword } from 'firebase/auth';
-    import { goto } from '$app/navigation';
+    import { page } from '$app/stores'
+    import { auth } from '$lib/firebase/client'
+    import { signInWithEmailAndPassword } from 'firebase/auth'
+    import { goto } from '$app/navigation'
 
-    let email = '';
-    let password = '';
-    let error = '';
-    let loading = false;
+    let email = ''
+    let password = ''
+    let error = ''
+    let loading = false
 
     async function handleLogin() {
-    error = '';
-    loading = true;
+    error = ''
+    loading = true
 
         try {
-            const cred = await signInWithEmailAndPassword(auth, email, password);
-            const idToken = await cred.user.getIdToken();
+            const cred = await signInWithEmailAndPassword(auth, email, password)
+            const idToken = await cred.user.getIdToken()
 
             const res = await fetch('/api/session', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ idToken })
-            });
+            })
 
             if (!res.ok) {
-            const data = await res.json().catch(() => ({}));
-            throw new Error(data?.error ?? 'Login failed');
+            const data = await res.json().catch(() => ({}))
+            throw new Error(data?.error ?? 'Login failed')
             }
 
-            const next = $page.url.searchParams.get('next') || '/admin';
-            await goto(next);
+            const next = $page.url.searchParams.get('next')
+            const safeNext = next && next.startsWith('/') && !next.startsWith('//') ? next : '/admin'
+            await goto(safeNext)
+            
         } catch (e) {
-            error = e instanceof Error ? e.message : 'Login failed';
+            error = e instanceof Error ? e.message : 'Login failed'
         } finally {
-            loading = false;
+            loading = false
         }
     }
 </script>

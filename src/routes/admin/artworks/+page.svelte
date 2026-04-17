@@ -1,14 +1,23 @@
 
 <script lang="ts">
+    import { page } from '$app/stores'
 
-    import ArtworkCard from "$lib/components/ArtworkCard.svelte";
-    import type { PageData } from "./$types";
+    import ArtworkCard from "$lib/components/ArtworkCard.svelte"
+    import type { PageData } from "./$types"
 
     export let data: PageData
+
+    $: showSavedBanner = $page.url.searchParams.get('saved') === '1'
 
 </script>
 
 <section class="max-w-6xl mx-auto px-6 py-16">
+
+    {#if showSavedBanner}
+        <div class="mb-6 border border-green-700/20 bg-green-50 px-4 py-3 text-sm text-green-900">
+            Artwork saved.
+        </div>
+    {/if}
 
     <div class="flex justify-between items-center mb-6">
 

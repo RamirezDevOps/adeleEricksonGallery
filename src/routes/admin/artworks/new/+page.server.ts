@@ -1,18 +1,7 @@
 import { sanitizeCloudinaryPublicId, validateCloudinaryPublicId } from '$lib/cloudinary'
 import { db } from '$lib/firebase/admin.server'
-import { FieldValue } from 'firebase-admin/firestore'
-import { error, fail, redirect } from '@sveltejs/kit'
-import type { Actions, PageServerLoad } from './$types'
-
-type Artwork = {
-    id: string
-    title: string
-    price: number
-    size: string
-    year: number
-    imagePublicId: string
-    sold?: boolean
-}
+import { fail, redirect } from '@sveltejs/kit'
+import type { Actions } from './$types'
 
 type ArtworkInputValues = {
     title: string
@@ -188,29 +177,8 @@ function parseArtworkInput(formData: FormData) {
     }
 }
 
-async function getArtworkOrThrow(id: string) {
-    const doc = await db.collection('artworks').doc(id).get()
-
-    if (!doc.exists) {
-        throw error(404, 'Artwork not found')
-    }
-
-    return {
-        id: doc.id,
-        ...(doc.data() as Omit<Artwork, 'id'>)
-    }
-}
-
-export const load: PageServerLoad = async ({ params }) => {
-    const artwork = await getArtworkOrThrow(params.id)
-
-    return { artwork }
-}
-
 export const actions: Actions = {
-    save: async ({ request, params }) => {
-        await getArtworkOrThrow(params.id)
-
+    default: async ({ request }) => {
         let formData: FormData
 
         try {
@@ -229,38 +197,15 @@ export const actions: Actions = {
         }
 
         try {
-            await db.collection('artworks').doc(params.id).update({
-                ...parsed.data,
-                image: FieldValue.delete()
-            })
+            await db.collection('artworks').add(parsed.data)
         } catch (err) {
-            console.error('Failed to update artwork', {
-                artworkId: params.id,
+            console.error('Failed to create artwork', {
                 message: err instanceof Error ? err.message : 'Unknown error'
             })
 
             return fail(400, {
                 errors: { _form: 'Unable to save changes right now. Please try again.' },
                 values: parsed.values
-            })
-        }
-
-        throw redirect(303, '/admin/artworks?saved=1')
-    },
-    delete: async ({ params }) => {
-        await getArtworkOrThrow(params.id)
-
-        try {
-            await db.collection('artworks').doc(params.id).delete()
-        } catch (err) {
-            console.error('Failed to delete artwork', {
-                artworkId: params.id,
-                message: err instanceof Error ? err.message : 'Unknown error'
-            })
-
-            return fail(400, {
-                errors: { _form: 'Unable to delete artwork right now. Please try again.' },
-                values: EMPTY_VALUES
             })
         }
 

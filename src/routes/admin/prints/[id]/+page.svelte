@@ -1,9 +1,10 @@
 <script lang="ts">
 
-    import PrintDetail from "$lib/components/PrintDetail.svelte";
-    import type {PageData} from "./$types"
+    import PrintDetail from "$lib/components/PrintDetail.svelte"
+    import type { ActionData, PageData } from "./$types"
 
     export let data: PageData
+    export let form: ActionData
 
     const print = data.print
 
@@ -11,7 +12,7 @@
 
 {#if print}
 
-    <PrintDetail print={print} />
+    <PrintDetail print={print} mode={"admin"} form={form ?? undefined} showDeleteAction={true} formAction="?/save" />
 
 {:else}
 

@@ -1,6 +1,6 @@
-import type { PageServerLoad } from "./$types";
-import { db } from "$lib/firebase/admin.server";
-import { error } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types"
+import { db } from "$lib/firebase/admin.server"
+import { error } from "@sveltejs/kit"
 
 type Artwork = {
     id: string,
@@ -8,7 +8,7 @@ type Artwork = {
     price: number,
     size: string,
     year: number,
-    image: string,
+    imagePublicId: string,
     sold?: boolean
 }
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {page} from '$app/stores';
+    import {page} from '$app/stores'
 </script>
 
 <nav class="w-full border-b border-neutral-200 bg-white">

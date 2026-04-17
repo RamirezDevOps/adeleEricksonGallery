@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import PrintDetail from "$lib/components/PrintDetail.svelte";
+    import PrintDetail from "$lib/components/PrintDetail.svelte"
     import type {PageData} from "./$types"
 
     export let data: PageData

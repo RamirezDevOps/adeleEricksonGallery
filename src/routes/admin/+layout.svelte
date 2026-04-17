@@ -1,11 +1,11 @@
 <script lang="ts"> 
-    import { goto } from '$app/navigation';
+    import { goto } from '$app/navigation'
 
-    let { data, children } = $props();
+    let { data, children } = $props()
 
     async function logout() {
-        await fetch('/api/session', { method: 'DELETE' });
-        await goto('/');
+        await fetch('/api/session', { method: 'DELETE' })
+        await goto('/')
     }
 
 </script>

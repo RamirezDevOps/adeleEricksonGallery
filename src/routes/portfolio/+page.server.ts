@@ -7,7 +7,7 @@ type Artwork = {
     price: number,
     size: string,
     year: number,
-    image: string,
+    imagePublicId: string,
     sold?: boolean
 }
 

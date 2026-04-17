@@ -1,17 +1,8 @@
 import { sanitizeCloudinaryPublicId, validateCloudinaryPublicId } from '$lib/cloudinary'
 import { db } from '$lib/firebase/admin.server'
-import { getPrintSizeByLabel, type PrintSize } from '$lib/prints'
-import { FieldValue } from 'firebase-admin/firestore'
-import { error, fail, redirect } from '@sveltejs/kit'
-import type { Actions, PageServerLoad } from './$types'
-
-type Print = {
-    id: string
-    title: string
-    price: number
-    imagePublicId: string
-    size: PrintSize | null
-}
+import { getPrintSizeByLabel } from '$lib/prints'
+import { fail, redirect } from '@sveltejs/kit'
+import type { Actions } from './$types'
 
 type PrintInputValues = {
     title: string
@@ -153,29 +144,8 @@ function parsePrintInput(formData: FormData) {
     }
 }
 
-async function getPrintOrThrow(id: string) {
-    const doc = await db.collection('prints').doc(id).get()
-
-    if (!doc.exists) {
-        throw error(404, 'Print not found')
-    }
-
-    return {
-        id: doc.id,
-        ...(doc.data() as Omit<Print, 'id'>)
-    }
-}
-
-export const load: PageServerLoad = async ({ params }) => {
-    const print = await getPrintOrThrow(params.id)
-
-    return { print }
-}
-
 export const actions: Actions = {
-    save: async ({ request, params }) => {
-        await getPrintOrThrow(params.id)
-
+    default: async ({ request }) => {
         let formData: FormData
 
         try {
@@ -194,39 +164,15 @@ export const actions: Actions = {
         }
 
         try {
-            await db.collection('prints').doc(params.id).update({
-                ...parsed.data,
-                image: FieldValue.delete(),
-                sizes: FieldValue.delete()
-            })
+            await db.collection('prints').add(parsed.data)
         } catch (err) {
-            console.error('Failed to update print', {
-                printId: params.id,
+            console.error('Failed to create print', {
                 message: err instanceof Error ? err.message : 'Unknown error'
             })
 
             return fail(400, {
                 errors: { _form: 'Unable to save changes right now. Please try again.' },
                 values: parsed.values
-            })
-        }
-
-        throw redirect(303, '/admin/prints?saved=1')
-    },
-    delete: async ({ params }) => {
-        await getPrintOrThrow(params.id)
-
-        try {
-            await db.collection('prints').doc(params.id).delete()
-        } catch (err) {
-            console.error('Failed to delete print', {
-                printId: params.id,
-                message: err instanceof Error ? err.message : 'Unknown error'
-            })
-
-            return fail(400, {
-                errors: { _form: 'Unable to delete print right now. Please try again.' },
-                values: EMPTY_VALUES
             })
         }
 

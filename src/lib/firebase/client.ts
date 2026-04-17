@@ -1,7 +1,7 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { env } from '$env/dynamic/public';
+import { initializeApp, getApps } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
+import { env } from '$env/dynamic/public'
 
 const firebaseConfig = {
   apiKey: env.PUBLIC_FIREBASE_API_KEY,
@@ -11,7 +11,7 @@ const firebaseConfig = {
   messagingSenderId: env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: env.PUBLIC_FIREBASE_APP_ID,
   measurementId: env.PUBLIC_FIREBASE_MEASUREMENT_ID
-};
-export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-export const auth = getAuth(app);
+}
+export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+export const auth = getAuth(app)
 export const db = getFirestore(app)

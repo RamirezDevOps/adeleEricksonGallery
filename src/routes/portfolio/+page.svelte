@@ -1,7 +1,7 @@
 <script lang="ts">
 
-    import ArtworkCard from "$lib/components/ArtworkCard.svelte";
-    import type { PageData } from "./$types";
+    import ArtworkCard from "$lib/components/ArtworkCard.svelte"
+    import type { PageData } from "./$types"
 
     export let data: PageData
 

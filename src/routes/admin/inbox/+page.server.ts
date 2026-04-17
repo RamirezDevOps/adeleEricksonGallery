@@ -1,4 +1,4 @@
-import { db } from "$lib/firebase/admin.server";
+import { db } from "$lib/firebase/admin.server"
 
 export async function load() {
     const snapshot = await db.collection("inquiries").orderBy("createdAt", "desc").get()
@@ -9,7 +9,7 @@ export async function load() {
         return {
             id: doc.id,
             ...data,
-            createdAt: data.createdAt?.toMillis()
+            createdAt: data.createdAt?.toDate?.()?.getTime?.()
         }
     })
 

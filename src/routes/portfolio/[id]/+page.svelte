@@ -1,12 +1,12 @@
 <script lang="ts">
 
-    import ArtworkDetail from '$lib/components/ArtworkDetail.svelte';
+    import ArtworkDetail from '$lib/components/ArtworkDetail.svelte'
 
     import type {PageData} from './$types'
 
     export let data: PageData
 
-    const artwork = data.artwork;
+    const artwork = data.artwork
 
 </script>
 

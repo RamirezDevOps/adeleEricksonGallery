@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import PrintCard from "$lib/components/PrintCard.svelte";
+    import PrintCard from "$lib/components/PrintCard.svelte"
     import type {PageData} from "./$types"
 
     export let data: PageData

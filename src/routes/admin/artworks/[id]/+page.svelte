@@ -1,18 +1,19 @@
 <script lang="ts">
 
-    import ArtworkDetail from '$lib/components/ArtworkDetail.svelte';
+    import ArtworkDetail from '$lib/components/ArtworkDetail.svelte'
 
-    import type {PageData} from './$types'
+    import type { ActionData, PageData } from './$types'
 
     export let data: PageData
+    export let form: ActionData
 
-    const artwork = data.artwork;
+    const artwork = data.artwork
 
 </script>
 
 {#if artwork}
 
-    <ArtworkDetail artwork={data.artwork} />
+    <ArtworkDetail artwork={data.artwork} mode={"admin"} form={form ?? undefined} showDeleteAction={true} formAction="?/save" />
 
 {:else}
 
