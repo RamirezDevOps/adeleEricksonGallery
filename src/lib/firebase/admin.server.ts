@@ -12,7 +12,7 @@ function getPrivateKey() {
 if (!getApps().length) {
     initializeApp({
         credential: cert({
-            projectId: env.FIREBASE_PROJECT_ID,
+            projectId: "adeleericksongallery",
             clientEmail: env.FIREBASE_CLIENT_EMAIL,
             privateKey: getPrivateKey()
         })

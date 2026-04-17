@@ -1,6 +1,6 @@
 import type { CloudinaryUploadWidgetResults } from 'svelte-cloudinary'
 
-export const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET ?? ''
+export const CLOUDINARY_UPLOAD_PRESET = "adeleEricksonGallery"
 
 const PUBLIC_ID_PATTERN = /^[a-zA-Z0-9/_.,-]+$/
 const MAX_PUBLIC_ID_LENGTH = 255
